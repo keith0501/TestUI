@@ -1,10 +1,23 @@
-import { browser, element, by } from 'protractor';
+import { AppPage } from './app.po';
+import { browser, logging } from 'protractor';
 
-describe('Tour of Heroes', () => {
-  beforeEach(() => browser.get('/'));
+describe('workspace-project App', () => {
+  let page: AppPage;
 
-  it('should display "Tour of Heroes"', async () => {
-    const title = await element(by.css('app-root h1')).getText();
-    expect(title).toEqual('Tour of Heroes');
+  beforeEach(() => {
+    page = new AppPage();
+  });
+
+  it('should display welcome message', () => {
+    page.navigateTo();
+    expect(page.getTitleText()).toEqual('my-dream-app app is running!');
+  });
+
+  afterEach(async () => {
+    // Assert that there are no errors emitted from the browser
+    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
+    expect(logs).not.toContain(jasmine.objectContaining({
+      level: logging.Level.SEVERE,
+    } as logging.Entry));
   });
 });
